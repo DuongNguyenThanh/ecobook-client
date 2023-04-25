@@ -22,10 +22,10 @@
                                 <ul class="single-mega cn-col-4">
                                     <li class="title">Women's Collection</li>
                                     <li><a href="shop.html">Dresses</a></li>
-                                    <li><a href="/shop.html">Blouses &amp; Shirts</a></li>
-                                    <li><a href="/shop.html">T-shirts</a></li>
-                                    <li><a href="/shop.html">Rompers</a></li>
-                                    <li><a href="/shop.html">Bras &amp; Panties</a></li>
+                                    <li><a href="shop.html">Blouses &amp; Shirts</a></li>
+                                    <li><a href="shop.html">T-shirts</a></li>
+                                    <li><a href="shop.html">Rompers</a></li>
+                                    <li><a href="shop.html">Bras &amp; Panties</a></li>
                                 </ul>
                                 <ul class="single-mega cn-col-4">
                                     <li class="title">Men's Collection</li>
@@ -62,7 +62,20 @@
                         </li>
                         <li><a href="/blog.html">Blog</a></li>
                         <li><a href="/contact.html">Contact</a></li>
-                        <li>Hello someone</li>
+                        <li><h3>Hello, </h3> <span th:text="${user != null ? user.username : ''}"></span></li>
+                        <li><p id="login-logout-link"></p></li>
+                        <script>
+                            // Replace this with your own server-side code to determine if the user is logged in
+                            var user = user;
+
+                            var loginLogoutLink = document.getElementById("login-logout-link");
+                            if (user != null) {
+                                loginLogoutLink.innerHTML = '<a href="../user/logout">Logout</a>';
+                            } else {
+                                loginLogoutLink.innerHTML = '<a href="../user/sign-in">Login</a>';
+                            }
+                        </script>
+
                     </ul>
                 </div>
                 <!-- Nav End -->
@@ -84,7 +97,7 @@
             </div>
             <!-- User Login Info -->
             <div class="user-login-info">
-                <a href="/#"><img src="/img/core-img/user.svg" alt=""></a>
+                <a href="#"><img src="/img/core-img/user.svg" alt=""></a>
             </div>
             <!-- Cart Area -->
             <div class="cart-area">

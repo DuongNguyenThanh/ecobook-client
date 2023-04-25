@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/ecobook11")
+@RequestMapping(path = "/ecobook")
 public class TestController {
     @GetMapping("/")
     public String getHome(){

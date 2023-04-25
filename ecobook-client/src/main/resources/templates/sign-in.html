@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/fonts1/icomoon/style.css}">
+
+  <link rel="stylesheet" th:href="@{/css1/owl.carousel.min.css}">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/css1/bootstrap.min.css}">
+
+  <!-- Style -->
+  <link rel="stylesheet" th:href="@{/css1/style.css}">
+
+  <title>Sign in</title>
+</head>
+<body>
+
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- <div class="col-md-6 order-md-2">
+          <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+        </div> -->
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block">
+                  <div class="mb-4">
+                  <h3>Sign In to <strong>Ecobook</strong></h3>
+                  <p class="mb-4">Les bons livres, comme les bons amis, sont peu nombreux et choisis; Plus vous choisissez, plus vous profitez.</p>
+                </div>
+                <form action="" method="post" th:object="${request}">
+                  <div class="form-group first">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" th:field="*{username}" required>
+
+                  </div>
+                  <div class="form-group last mb-4">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" th:field="*{password}" required>
+                    
+                  </div>
+                  <div><label style="color: red" th:text="${message}"></label></div>
+                  
+                  <div class="d-flex mb-5 align-items-center">
+                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+                  </div>
+
+                  <input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
+
+                  <span class="d-block text-center my-4 text-muted"> or sign in with</span>
+                  
+                  <div class="social-login text-center">
+                    <a href="#" class="facebook">
+                      <span class="icon-facebook mr-3"></span> 
+                    </a>
+                    <a href="#" class="github">
+                      <span class="icon-github mr-3"></span> 
+                    </a>
+                    <a href="#" class="google">
+                      <span class="icon-google mr-3"></span> 
+                    </a>
+                  </div>
+				  
+				  <span class="d-block text-center my-4 text-muted"> Don't have an account? 
+					<a href="#" class="sign-up">Sign up</a>
+				  </span>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+    <script src="/js1/jquery-3.3.1.min.js"></script>
+    <script src="/js1/popper.min.js"></script>
+    <script src="/js1/bootstrap.min.js"></script>
+    <script src="/js1/main.js"></script>
+  </body>
+</html>

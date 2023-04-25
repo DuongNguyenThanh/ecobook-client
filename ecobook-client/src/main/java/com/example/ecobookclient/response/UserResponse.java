@@ -1,18 +1,16 @@
 package com.example.ecobookclient.response;
 
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
+@Data
 public class UserResponse {
-    private Long accountId;
-    private String accessToken;
 
-    private String refreshToken;
+    @JsonProperty("body")
+    private UserBody userBody;
 
-    private Set<String> listRole;
+    private String statusCode;
 
-    private String firstName;
+    private Integer statusCodeValue;
 
-    private String lastName;
-
-    private Long expiresIn;
 }
