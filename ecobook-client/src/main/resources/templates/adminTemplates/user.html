@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/css/userAdmin.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="background-image"></div>
+
+      <div class="funtions">
+        <div class="icon-admin">
+          <a href="">
+            <i class="fa-brands fa-accusoft"></i>
+            <h3>Adminator</h3>
+          </a>
+        </div>
+
+        <div class="list-funtions">
+          <div class="child">
+            <a href="/admin" class="dashboard">
+              <div class="icon">
+                <i class="fa-solid fa-house-chimney"></i>
+              </div>
+              <div class="name">
+                <span>Thống kê</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="child">
+            <a href="/admin/user" class="manage-user">
+              <div class="icon">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div class="name">
+                <span>Quản lí User</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="child">
+            <a href="/admin/question" class="manage-question">
+              <div class="icon">
+                <i class="fa-solid fa-circle-question"></i>
+              </div>
+              <div class="name">
+                <span>Quản lí câu hỏi</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="child">
+            <a href="/admin/category" class="manage-category">
+              <div class="icon">
+                <i class="fa-solid fa-building-columns"></i>
+              </div>
+              <div class="name">
+                <span>Quản lí danh mục câu hỏi</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <th:div th:include="/adminTemplates/feature"></th:div>
+
+      <div class="content-funtions">
+        <div class="navbar">
+          <div class="information">
+            <h4
+              th:text="'Xin chào, ' + ${#authentication.getPrincipal().getUsername()}"
+            >
+              USERNAME
+            </h4>
+            <p>Chúc bạn có một ngày vui vẻ và hạnh phúc</p>
+          </div>
+
+          <div class="box">
+            <a class="btn btn-info" href="/">Quay về</a>
+            <a class="btn btn-warning" href="/logout">Log out</a>
+          </div>
+        </div>
+
+        <div class="statistical">
+          <div class="content">
+            <div class="box">
+              <div class="data">
+                <h2>Quản lí tài khoản</h2>
+
+                <h6 th:text="'Tổng số tài khoản : ' + ${totalUser}">
+                  TONGSOTAIKHOAN
+                </h6>
+                <h6 th:text="'Tổng số tài khoản mới : ' + ${userThisMonth}">
+                  TONGSOTAIKHOANMOI
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="box">
+            <h5 style="text-align: center">
+              Thống kê người dùng đăng ký mới tháng này và tháng trước
+            </h5>
+
+            <div class="data">
+              <div class="last-month">
+                <h6 th:text="${lastMonth} + ' : '">LASTMONTH</h6>
+                <div id="graphUserlastMonth" class="variable"></div>
+                <p id="userLastMonth" th:text="${userLastMonth}">
+                  COUNTUSERLASTMONTH
+                </p>
+              </div>
+              <div class="current-month">
+                <h6 th:text="${thisMonth} + ' : '">THISMONTH</h6>
+                <div id="graphUserThisMonth" class="variable"></div>
+                <p id="userThisMonth" th:text="${userThisMonth}">
+                  COUNTUSERTHISMONTH
+                </p>
+              </div>
+            </div>
+
+            <h6>
+              Tốc độ tăng trưởng :
+              <div id="growthUser"></div>
+            </h6>
+          </div>
+
+          <div class="box">
+            <h5>Tìm kiếm tài khoản</h5>
+
+            <form method="get" action="" class="data-input">
+              <input
+                type="text"
+                name="user"
+                placeholder="Nhập username/email để tìm tài khoản"
+              />
+              <button class="btn btn-success">Search</button>
+            </form>
+
+            <h5>Kết quả tìm kiếm</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Tổng số câu hỏi</th>
+                  <th scope="col">Tổng số câu trả lời</th>
+                  <th scope="col">Số voted</th>
+                  <th scope="col">Chức năng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="user : ${findUser}">
+                  <td th:text="${user.name}">NAME</td>
+                  <td th:text="${user.username}">USERNAME</td>
+                  <td th:text="${user.email}">EMAIL</td>
+                  <td th:text="${user.total_question}">TOTALQUESTION</td>
+                  <td th:text="${user.total_answer}">TOTALANSWER</td>
+                  <td th:text="${user.total_vote}">TOTALVOTE</td>
+                  <td>
+                    <a th:href="@{/admin/user/{username}(username=${user.id})}"
+                      >Xem chi tiết</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box">
+            <h5>Top 10 tài khoản tương tác nhiều nhất</h5>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Tổng số câu hỏi</th>
+                  <th scope="col">Tổng số câu trả lời</th>
+                  <th scope="col">Số voted</th>
+                  <th scope="col">Chức năng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="user : ${topUsers}">
+                  <td th:text="${user.name}">NAME</td>
+                  <td th:text="${user.username}">USERNAME</td>
+                  <td th:text="${user.email}">EMAIL</td>
+                  <td th:text="${user.total_question}">TOTALQUESTION</td>
+                  <td th:text="${user.total_answer}">TOTALANSWER</td>
+                  <td th:text="${user.total_vote}">TOTALVOTE</td>
+                  <td>
+                    <a th:href="@{/admin/user/{username}(username=${user.id})}"
+                      >Xem chi tiết</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      //// START USER /////
+      const userThisMonth = document.getElementById('userThisMonth');
+      const userLastMonth = document.getElementById('userLastMonth');
+      const graphUserThisMonth = document.getElementById('graphUserThisMonth');
+      const graphUserlastMonth = document.getElementById('graphUserlastMonth');
+      const growthUser = document.getElementById('growthUser');
+
+      var countUserThisMonth = userThisMonth.textContent;
+      countUserThisMonth = parseInt(countUserThisMonth);
+      var countUserLastMonth = userLastMonth.textContent;
+      countUserLastMonth = parseInt(countUserLastMonth);
+
+      ///////////////////////////////////
+      const ptUser = 600 / (countUserThisMonth + countUserLastMonth);
+      graphUserThisMonth.style.width = ptUser * countUserThisMonth + 'px';
+      graphUserlastMonth.style.width = ptUser * countUserLastMonth + 'px';
+      ///////////////////////////////////
+
+      if (countUserLastMonth > countUserThisMonth) {
+        growthUser.classList.add('down');
+
+        if (countUserThisMonth == 0) countUserThisMonth = 1;
+
+        growthUser.innerText =
+          '-' + (countUserLastMonth / countUserThisMonth) * 100 + '%';
+      } else {
+        growthUser.classList.add('up');
+
+        if (countUserLastMonth == 0) countUserLastMonth = 1;
+
+        growthUser.innerText =
+          '+' + (countUserThisMonth / countUserLastMonth) * 100 + '%';
+      }
+
+      ///// END USER /////
+    </script>
+  </body>
+</html>
