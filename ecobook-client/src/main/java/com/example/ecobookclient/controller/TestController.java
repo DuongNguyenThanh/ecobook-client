@@ -13,10 +13,6 @@ public class TestController {
     public String getHome(){
         return "index";
     }
-    @GetMapping("/shop")
-    public String getShop(){
-        return "shop";
-    }
     @GetMapping("/detail")
     public String getDetail(){
         return "single-product-details";
@@ -25,5 +21,4 @@ public class TestController {
     public String getCheckout(){
         return "checkout";
     }
-
 }
