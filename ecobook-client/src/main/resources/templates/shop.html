@@ -112,7 +112,8 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="page-title text-center">
-                        <h2>Book</h2>
+                        <h2 th:text="${cate != null ? cate.name : 'Book'}">Book</h2>
+                        <h6 th:text="${cate != null ? cate.description : ''}"></h6>
                     </div>
                 </div>
             </div>
@@ -166,7 +167,7 @@
 
                             <label for="from">Price from:</label><br>
                             <input type="number" id="from" name="from" placeholder="Enter price" min="1" max="100"><br>
-                            <label for="to">Price from:</label><br>
+                            <label for="to">Price to:</label><br>
                             <input type="number" id="to" name="to" placeholder="Enter price" min="1" max="100"><br>
                         </div>
 
@@ -197,16 +198,16 @@
                                         <p><span th:text="${count}"></span> products found</p>
                                     </div>
                                     <!-- Sorting -->
-                                    <div class="product-sorting d-flex">
-                                        <p>Sort by:</p>
-                                        <form action="#" method="get">
-                                            <select name="select" id="sortByselect">
-                                                <option value="up">Price: up</option>
-                                                <option value="down">Price: down</option>
-                                            </select>
-                                            <input type="submit" class="d-none" value="">
-                                        </form>
-                                    </div>
+<!--                                    <div class="product-sorting d-flex">-->
+<!--                                        <p>Sort by:</p>-->
+<!--                                        <form action="#" method="get">-->
+<!--                                            <select name="select" id="sortByselect">-->
+<!--                                                <option value="up">Price: up</option>-->
+<!--                                                <option value="down">Price: down</option>-->
+<!--                                            </select>-->
+<!--                                            <input type="submit" class="d-none" value="">-->
+<!--                                        </form>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>

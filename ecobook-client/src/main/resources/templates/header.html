@@ -1,4 +1,4 @@
-<header class="header_area">
+<header class="header_area" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
         <!-- Classy Menu -->
         <nav class="classy-navbar" id="essenceNav">
@@ -76,8 +76,10 @@
         <div class="header-meta d-flex clearfix justify-content-end">
             <!-- Search Area -->
             <div class="search-area">
-                <form action="#" method="post">
+                <form action="../shop/" method="get">
                     <input type="search" name="search" id="headerSearch" placeholder="Type for search">
+                    <input type="hidden" name="from" id="from" value="1">
+                    <input type="hidden" name="to" id="to" value="100">
                     <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
             </div>
