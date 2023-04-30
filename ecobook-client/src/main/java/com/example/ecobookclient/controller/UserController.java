@@ -1,8 +1,10 @@
 package com.example.ecobookclient.controller;
 
+import com.example.ecobookclient.request.CartItemRequest;
 import com.example.ecobookclient.request.LoginRequest;
 import com.example.ecobookclient.request.RegisterRequest;
 import com.example.ecobookclient.request.ResetPassRequest;
+import com.example.ecobookclient.response.CartResponse;
 import com.example.ecobookclient.response.RegisterResponse;
 import com.example.ecobookclient.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +61,16 @@ public class UserController {
             session.setAttribute("user", Objects.requireNonNull(us.getBody()));
 //            log.info("login success: " + us.getBody());
             redirectAttributes.addFlashAttribute("user", us.getBody());
+            //get cart info when log in success
+            String urlCart = "http://localhost:8086/api/cart/active-cart";
+            headers.set("Authorization","Bearer " + us.getBody().getAccessToken());
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            CartItemRequest item = new CartItemRequest();
+            HttpEntity<CartItemRequest> entityc = new HttpEntity<>(item, headers);
+            ResponseEntity<CartResponse> response = restTemplate.exchange(urlCart, HttpMethod.GET, entityc, CartResponse.class);
+            CartResponse cart = response.getBody();
+            session.setAttribute("cart",cart);
+            session.setAttribute("cic",cart.getItems().stream().count());
             return "redirect:/ecobook/";
 
         } catch (Exception ex) {

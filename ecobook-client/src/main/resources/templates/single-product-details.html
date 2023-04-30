@@ -38,53 +38,22 @@
         <div class="cart-content d-flex">
 
             <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-1.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
+            <div th:if="${session.cart} != null">
+                <div th:each="i : ${session.cart.items}" class="cart-list">
+                    <!-- Single Cart Item -->
+                    <div class="single-cart-item">
+                        <a href="/#" class="product-image">
+                            <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${i.book.images.get(0).getId()})}" th:alt="${i.book.name}">
+                            <!-- Cart Item Desc -->
+                            <div class="cart-item-desc">
+                                <a href="/{itemId}(itemId=${i.id})"><span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span></a>
+                                <h6>Author: <span class="badge" th:text="i.book.author"></span></h6>
+                                <h6>Name: <span th:text="i.book.name"></span></h6>
+                                <p  class="color">Quantity: 1</p>
+                                <p th:text="i.book.price"class="price"></p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -112,30 +81,36 @@
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
             <div class="product_thumbnail_slides owl-carousel">
-                <img src="/img/product-img/book-big-5.png" alt="">
-                <img src="/img/product-img/book-big-4.png" alt="">
-                <img src="/img/product-img/book-big-1.png" alt="">
+                <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${book.images.get(0).getId()})}" th:alt="${book.name}">
+                <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${book.images.get(0).getId()})}" th:alt="${book.name}">
+                <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${book.images.get(0).getId()})}" th:alt="${book.name}">
             </div>
         </div>
 
         <!-- Single Product Description -->
         <div class="single_product_desc clearfix">
-            <span>mango</span>
-            <a href="cart.html">
-                <h2>Chainsaw man</h2>
+            <a href="/#">
+                <h2 th:text="${book.name}"></h2>
             </a>
-            <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-            <p class="product-desc">Mauris viverra cursus ante laoreet eleifend. Donec vel fringilla ante. Aenean finibus velit id urna vehicula, nec maximus est sollicitudin.</p>
+            <span>Price:</span><span class="product-price" th:text="${book.price}"></span>
+            <div th:if="${session.cart} != null">
+                <div th:each="i : ${session.cart.items}">
+                    <span th:if="${i.book.id} == ${book.id}" th:text="'This book is already in your cart'"></span>
+                </div>
+            </div>
+
+            <span>Author:</span><span  th:text="${book.author}"></span>
+            <span>Description: </span><spanp class="product-desc" th:text="${book.description}"></spanp>
 
             <!-- Form -->
             <form class="cart-form clearfix" method="post">
                 <!-- Select Box -->
                 <div class="select-box d-flex mt-50 mb-30">
                     <select name="select" id="productSize" class="mr-5">
-                        <option value="value">Con lai: 23</option>
+                        <option value="value">Con lai : <span th:text="${book.quantity}"></span></option>
                     </select>
                     <select name="select" id="productColor">
-                        <option value="value">Da ban: 500+</option>
+                        <option value="value">Da ban: <span th:text="${book.numberSales}"></span></option>
                     </select>
                 </div>
                 <!-- Cart & Favourite Box -->

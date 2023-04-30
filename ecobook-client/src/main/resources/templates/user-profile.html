@@ -38,53 +38,22 @@
         <div class="cart-content d-flex">
 
             <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-1.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
+            <div th:if="${session.cart} != null">
+                <div th:each="i : ${session.cart.items}" class="cart-list">
+                    <!-- Single Cart Item -->
+                    <div class="single-cart-item">
+                        <a href="/#" class="product-image">
+                            <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${i.book.images.get(0).getId()})}" th:alt="${i.book.name}">
+                            <!-- Cart Item Desc -->
+                            <div class="cart-item-desc">
+                                <a href="/{itemId}(itemId=${i.id})"><span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span></a>
+                                <h6>Author: <span class="badge" th:text="i.book.author"></span></h6>
+                                <h6>Name: <span th:text="i.book.name"></span></h6>
+                                <p  class="color">Quantity: 1</p>
+                                <p th:text="i.book.price"class="price"></p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 

@@ -100,5 +100,15 @@ public class BookController {
         model.addAttribute("category",listCategory);
         return "shop";
     }
+    @GetMapping("/detail/{bookId}")
+    public String getDetailBook(@PathVariable(name = "bookId") Integer bookId,
+                                Model model){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String url = "http://localhost:8082/api/ebook/"+bookId;
+        ResponseEntity<BookResponse> response = restTemplate.exchange(url,HttpMethod.GET,null, BookResponse.class);
+        model.addAttribute("book", response.getBody());
+        return "single-product-details";
+    }
 
 }

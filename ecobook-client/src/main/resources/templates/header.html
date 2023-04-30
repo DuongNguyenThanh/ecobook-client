@@ -50,10 +50,9 @@
                         </li>
                         <li><a href="/#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="/index.html">Home</a></li>
+                                <li><a th:href="@{/ecobook/}">Home</a></li>
 <!--                                <li><a href="/shop.html">Shop</a></li>-->
-                                <li><a href="/single-product-details.html">Product Details</a></li>
-                                <li><a href="/checkout.html">Checkout</a></li>
+                                <li><a th:href="@{/ecobook/checkout/}">Checkout</a></li>
 <!--                                <li><a href="/blog.html">Blog</a></li>-->
 <!--                                <li><a href="/single-blog.html">Single Blog</a></li>-->
 <!--                                <li><a href="/regular-page.html">Regular Page</a></li>-->
@@ -62,8 +61,8 @@
                         </li>
                         <li><a href="/blog.html">Blog</a></li>
                         <li><a href="/contact.html">Contact</a></li>
-                        <li> <a th:if="${session.user} != null" href="../user/sign-out">Logout</a>
-                            <a th:if="${session.user} == null" href="../user/sign-in">Login</a>
+                        <li> <a th:if="${session.user} != null" href="/user/sign-out">Logout</a>
+                            <a th:if="${session.user} == null" href="/user/sign-in">Login</a>
                         </li>
 
                     </ul>
@@ -89,13 +88,14 @@
             </div>
             <!-- User Login Info -->
             <div class="user-login-info">
-                <a th:href="${session.user != null} ? '../user/user-profile' : '../user/sign-in'">
+                <a th:href="${session.user != null} ? '/user/user-profile' : '/user/sign-in'">
                     <img src="/img/core-img/user.svg" alt="">
                 </a>
             </div>
             <!-- Cart Area -->
             <div class="cart-area">
-                <a href="/#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span>3</span></a>
+                <a th:if="${session.user} != null" href="#cart-detail" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span th:text="${session.cic}"></span></a>
+                <a th:if="${session.user} == null" th:href="@{/user/sign-in}" ><img src="/img/core-img/bag.svg" alt=""> <span th:text="${session.cic}"></span></a>
             </div>
         </div>
 

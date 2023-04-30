@@ -32,59 +32,28 @@
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="/img/core-img/bag.svg" alt=""> <span>3</span></a>
+            <a href="cart" id="rightSideCart"><img src="/img/core-img/bag.svg" alt=""> <span>3</span></a>
         </div>
 
         <div class="cart-content d-flex">
 
             <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-1.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="/img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
+            <div th:if="${session.cart} != null">
+                <div th:each="i : ${session.cart.items}" class="cart-list">
+                    <!-- Single Cart Item -->
+                    <div class="single-cart-item">
+                        <a href="/#" class="product-image">
+                            <img th:src="@{http://localhost:8082/api/image/{imageId}(imageId=${i.book.images.get(0).getId()})}" th:alt="${i.book.name}">
+                            <!-- Cart Item Desc -->
+                            <div class="cart-item-desc">
+                                <a href="/{itemId}(itemId=${i.id})"><span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span></a>
+                                <h6>Author: <span class="badge" th:text="i.book.author"></span></h6>
+                                <h6>Name: <span th:text="i.book.name"></span></h6>
+                                <p  class="color">Quantity: 1</p>
+                                <p th:text="i.book.price"class="price"></p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -164,11 +133,18 @@
                             <h6 class="widget-title mb-30">Filter by</h6>
                             <!-- Widget Title 2 -->
                             <p class="widget-title2 mb-30">Price</p>
+                            <div class="search-area">
+                                <form action="../shop/" method="get">
+                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <input type="search" name="search" id="headerSearch" placeholder="search..."><br><br>
+                                    <label for="from">Price from:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <input type="number" id="from" name="from" min="1" max="100" required><br>
+                                    <label for="to">Price to:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <input type="number" id="to" name="to" min="1" max="100" required><br>
 
-                            <label for="from">Price from:</label><br>
-                            <input type="number" id="from" name="from" placeholder="Enter price" min="1" max="100"><br>
-                            <label for="to">Price to:</label><br>
-                            <input type="number" id="to" name="to" placeholder="Enter price" min="1" max="100"><br>
+                                </form>
+                            </div>
+
                         </div>
 
                         <!-- ##### Single Widget ##### -->
@@ -214,7 +190,7 @@
 
                         <div  class="row">
                             <!-- Single Product -->
-                            <div th:each="b, iterStat  : ${book}" class="col-12 col-sm-6 col-lg-4">
+                            <div th:each="b  : ${book}" class="col-12 col-sm-6 col-lg-4">
                                 <div  class="single-product-wrapper">
                                     <!-- Product Image -->
                                     <div class="product-img">
@@ -235,17 +211,17 @@
 
                                     <!-- Product Description -->
                                     <div class="product-description">
-                                        <span th:text="${b.author}"></span>
-                                        <a th:href="@{/}">
+                                        <span >Author: </span><span th:text="${b.author}"></span>
+                                        <a th:href="@{/shop/detail/{bookId}(bookId=${b.id})}">
                                             <h6 th:text="${b.name}"></h6>
                                         </a>
                                         <span>Price: </span><span class="product-price" th:text="${b.price}"></span>
-                                        <p th:text="${b.description}"></p>
+                                        <h6><span>Da ban: </span><span th:text="${b.numberSales}"></span></h6>
                                         <!-- Hover Content -->
                                         <div class="hover-content">
                                             <!-- Add to Cart -->
                                             <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">Add to Cart</a>
+                                                <a th:href="@{../cart}" class="btn essence-btn">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>
