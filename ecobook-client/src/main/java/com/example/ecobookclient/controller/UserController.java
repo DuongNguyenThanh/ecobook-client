@@ -4,6 +4,7 @@ import com.example.ecobookclient.request.CartItemRequest;
 import com.example.ecobookclient.request.LoginRequest;
 import com.example.ecobookclient.request.RegisterRequest;
 import com.example.ecobookclient.request.ResetPassRequest;
+import com.example.ecobookclient.response.CartItemResponse;
 import com.example.ecobookclient.response.CartResponse;
 import com.example.ecobookclient.response.RegisterResponse;
 import com.example.ecobookclient.response.UserResponse;
@@ -64,13 +65,18 @@ public class UserController {
             //get cart info when log in success
             String urlCart = "http://localhost:8086/api/cart/active-cart";
             headers.set("Authorization","Bearer " + us.getBody().getAccessToken());
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            CartItemRequest item = new CartItemRequest();
-            HttpEntity<CartItemRequest> entityc = new HttpEntity<>(item, headers);
-            ResponseEntity<CartResponse> response = restTemplate.exchange(urlCart, HttpMethod.GET, entityc, CartResponse.class);
+            HttpEntity<CartItemRequest> entity1 = new HttpEntity<>(new CartItemRequest(), headers);
+            ResponseEntity<CartResponse> response = restTemplate.exchange(urlCart, HttpMethod.GET, entity1, CartResponse.class);
             CartResponse cart = response.getBody();
             session.setAttribute("cart",cart);
-            session.setAttribute("cic",cart.getItems().stream().count());
+            session.setAttribute("cic",cart.getItems()
+                    .stream()
+                    .count());
+            session.setAttribute("subtotal",String.format("%.2f",
+                    cart.getItems()
+                    .stream()
+                    .mapToDouble(CartItemResponse::getPrice)
+                    .sum()));
             return "redirect:/ecobook/";
 
         } catch (Exception ex) {
@@ -83,6 +89,9 @@ public class UserController {
     @GetMapping("/sign-out")
     public String signOut(HttpSession session){
         session.removeAttribute("user");
+        session.removeAttribute("cic");
+        session.removeAttribute("cart");
+        session.removeAttribute("subtotal");
         return "redirect:/ecobook/";
     }
 

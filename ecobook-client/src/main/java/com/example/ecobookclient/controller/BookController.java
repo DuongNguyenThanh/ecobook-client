@@ -108,6 +108,7 @@ public class BookController {
         String url = "http://localhost:8082/api/ebook/"+bookId;
         ResponseEntity<BookResponse> response = restTemplate.exchange(url,HttpMethod.GET,null, BookResponse.class);
         model.addAttribute("book", response.getBody());
+
         return "single-product-details";
     }
 
