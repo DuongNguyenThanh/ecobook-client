@@ -13,10 +13,6 @@ a {
   text-decoration: none;
 }
 
-td,th {
-  text-align: center;
-}
-
 
 .app {
   min-height: 100vh;
@@ -25,7 +21,7 @@ td,th {
 }
 
 .background-image {
-  background-image: url('/image/background.jpg');
+  background-image: url('/images/background.jpg');
   position: fixed;
   width: 100%;
   min-height: 100vh;
@@ -163,10 +159,17 @@ td,th {
   padding: 10px;
 }
 
-.content-funtions .statistical .content .box .data h2 {
-  margin-bottom: 50px;
+.content-funtions .statistical .content .box .data h5 {
+  height: 50%;
+  text-align: center;
 }
 
+.content-funtions .statistical .content .box .data p {
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: green;
+}
 
 .content-funtions .detail {
   width: 100%;
@@ -182,10 +185,6 @@ td,th {
   padding: 20px 10px;
   position: relative;
   margin-bottom: 20px;
-}
-
-.content-funtions .detail .box h5 {
-  text-align: center;
 }
 
 .content-funtions .detail .box .data {
@@ -208,9 +207,9 @@ td,th {
 
 /*  sadfd  */
 
-.content-funtions .detail .box .data .last-month .variable {
-  width: 200px;
-}
+/* .content-funtions .detail .box .data .last-month .variable {
+
+} */
 
 
 .content-funtions .detail .box .data .last-month .variable{
@@ -235,19 +234,6 @@ td,th {
 }
 
 /* end home */
-
-.content-funtions .detail .box .data-input {
-  margin: 20px 0;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.content-funtions .detail .box .data-input input {
-  width: 85%;
-  height: 35px;
-  padding: 5px;
-}
 
 @media (max-width: 992px) {
   .funtions {
@@ -274,50 +260,4 @@ td,th {
     padding-left: 0;
     justify-content: center;
   }
-}
-
-/*  //////////////////////////////   */
-.information-user{
-  width: 100%;
-  min-height: 250px;
-  padding-top: 100px;
-  position: relative;
-}
-
-.user {
-  padding: 10px 20px;
-  min-height: 100vh;
-}
-
-.user-avatar {
-  display: flex;
-  justify-content: center;
-}
-
-.user-avatar img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: solid 2px brown;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-.user-name h3 {
-  text-align: center;
-}
-
-.user-detail {
-  background-color: white;
-  border-radius: 20px;
-  padding: 20px;
-}
-
-.recent-question {
-  margin: 50px 0;
-}
-
-.recent-question h5 {
-  text-align: center;
 }

@@ -21,74 +21,19 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="/css/userAdmin.css" />
+    <link rel="stylesheet" href="/css3/userAdmin.css" />
   </head>
 
   <body>
     <div class="app">
       <div class="background-image"></div>
-
-      <div class="funtions">
-        <div class="icon-admin">
-          <a href="">
-            <i class="fa-brands fa-accusoft"></i>
-            <h3>Adminator</h3>
-          </a>
-        </div>
-
-        <div class="list-funtions">
-          <div class="child">
-            <a href="/admin" class="dashboard">
-              <div class="icon">
-                <i class="fa-solid fa-house-chimney"></i>
-              </div>
-              <div class="name">
-                <span>Thống kê</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="child">
-            <a href="/admin/user" class="manage-user">
-              <div class="icon">
-                <i class="fa-solid fa-user"></i>
-              </div>
-              <div class="name">
-                <span>Quản lí User</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="child">
-            <a href="/admin/question" class="manage-question">
-              <div class="icon">
-                <i class="fa-solid fa-circle-question"></i>
-              </div>
-              <div class="name">
-                <span>Quản lí câu hỏi</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="child">
-            <a href="/admin/category" class="manage-category">
-              <div class="icon">
-                <i class="fa-solid fa-building-columns"></i>
-              </div>
-              <div class="name">
-                <span>Quản lí danh mục câu hỏi</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
       <th:div th:include="/adminTemplates/feature"></th:div>
 
       <div class="content-funtions">
         <div class="navbar">
           <div class="information">
             <h4
-              th:text="'Xin chào, ' + ${#authentication.getPrincipal().getUsername()}"
+              
             >
               USERNAME
             </h4>
@@ -105,9 +50,9 @@
           <div class="content">
             <div class="box">
               <div class="data">
-                <h2>Quản lí danh mục câu hỏi</h2>
+                <h2>Quản lí danh mục sách</h2>
 
-                <h6 th:text="'Tổng số danh mục câu hỏi : ' + ${totalCategory}">
+                <!-- <h6 th:text="'Tổng số danh mục câu hỏi : ' + ${totalCategory}"> -->
                   Tổng số danh mục câu hỏi : 5
                 </h6>
               </div>
@@ -131,9 +76,6 @@
               <tbody>
                 <tr th:each="category : ${listCategory}">
                   <td th:text="${category.name}">Công nghệ</td>
-                  <!-- <td>
-                    <input type="text" name="name" />
-                  </td> -->
                   <td th:text="${category.total_question}">32</td>
                   <td th:text="${category.total_view}">6100</td>
                   <td>
@@ -149,7 +91,7 @@
             </table>
           </div>
 
-          <div class="box">
+          <!-- <div class="box">
             <h5>Thêm danh mục / lĩnh vực câu hỏi</h5>
             <form
               action="/admin/category/add"
@@ -165,10 +107,10 @@
               />
               <button class="btn btn-success">Thêm</button>
             </form>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+
   </body>
 </html>
