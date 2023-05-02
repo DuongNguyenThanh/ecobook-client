@@ -1,9 +1,9 @@
-<header class="header_area">
+<header class="header_area" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
         <!-- Classy Menu -->
         <nav class="classy-navbar" id="essenceNav">
             <!-- Logo -->
-            <a class="nav-brand" href="index.html"><img src="/img/core-img/logo.png" alt=""></a>
+            <a class="nav-brand" href="index.html"><img src="/img/core-img/logo4.png" alt=""></a>
             <!-- Navbar Toggler -->
             <div class="classy-navbar-toggler">
                 <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -17,64 +17,53 @@
                 <!-- Nav Start -->
                 <div class="classynav">
                     <ul>
-                        <li><a href="/#">Shop</a>
-                            <div class="megamenu">
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Women's Collection</li>
-                                    <li><a href="shop.html">Dresses</a></li>
-                                    <li><a href="shop.html">Blouses &amp; Shirts</a></li>
-                                    <li><a href="shop.html">T-shirts</a></li>
-                                    <li><a href="shop.html">Rompers</a></li>
-                                    <li><a href="shop.html">Bras &amp; Panties</a></li>
-                                </ul>
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Men's Collection</li>
-                                    <li><a href="/shop.html">T-Shirts</a></li>
-                                    <li><a href="/shop.html">Polo</a></li>
-                                    <li><a href="/shop.html">Shirts</a></li>
-                                    <li><a href="/shop.html">Jackets</a></li>
-                                    <li><a href="/shop.html">Trench</a></li>
-                                </ul>
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Kid's Collection</li>
-                                    <li><a href="/shop.html">Dresses</a></li>
-                                    <li><a href="/shop.html">Shirts</a></li>
-                                    <li><a href="/shop.html">T-shirts</a></li>
-                                    <li><a href="/shop.html">Jackets</a></li>
-                                    <li><a href="/shop.html">Trench</a></li>
-                                </ul>
-                                <div class="single-mega cn-col-4">
-                                    <img src="/img/bg-img/bg-6.jpg" alt="">
-                                </div>
-                            </div>
+                        <li><a th:href="@{/shop/{cate-id}(cate-id=0)}">Shop</a>
+<!--                            <div class="megamenu">-->
+<!--                                <ul class="single-mega cn-col-4">-->
+<!--                                    <li class="title">Women's Collection</li>-->
+<!--                                    <li><a href="shop.html">Dresses</a></li>-->
+<!--                                    <li><a href="shop.html">Blouses &amp; Shirts</a></li>-->
+<!--                                    <li><a href="shop.html">T-shirts</a></li>-->
+<!--                                    <li><a href="shop.html">Rompers</a></li>-->
+<!--                                    <li><a href="shop.html">Bras &amp; Panties</a></li>-->
+<!--                                </ul>-->
+<!--                                <ul class="single-mega cn-col-4">-->
+<!--                                    <li class="title">Men's Collection</li>-->
+<!--                                    <li><a href="/shop.html">T-Shirts</a></li>-->
+<!--                                    <li><a href="/shop.html">Polo</a></li>-->
+<!--                                    <li><a href="/shop.html">Shirts</a></li>-->
+<!--                                    <li><a href="/shop.html">Jackets</a></li>-->
+<!--                                    <li><a href="/shop.html">Trench</a></li>-->
+<!--                                </ul>-->
+<!--                                <ul class="single-mega cn-col-4">-->
+<!--                                    <li class="title">Kid's Collection</li>-->
+<!--                                    <li><a href="/shop.html">Dresses</a></li>-->
+<!--                                    <li><a href="/shop.html">Shirts</a></li>-->
+<!--                                    <li><a href="/shop.html">T-shirts</a></li>-->
+<!--                                    <li><a href="/shop.html">Jackets</a></li>-->
+<!--                                    <li><a href="/shop.html">Trench</a></li>-->
+<!--                                </ul>-->
+<!--                                <div class="single-mega cn-col-4">-->
+<!--                                    <img src="/img/bg-img/bg-6.jpg" alt="">-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </li>
                         <li><a href="/#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="/index.html">Home</a></li>
-                                <li><a href="/shop.html">Shop</a></li>
-                                <li><a href="/single-product-details.html">Product Details</a></li>
-                                <li><a href="/checkout.html">Checkout</a></li>
-                                <li><a href="/blog.html">Blog</a></li>
-                                <li><a href="/single-blog.html">Single Blog</a></li>
-                                <li><a href="/regular-page.html">Regular Page</a></li>
-                                <li><a href="/contact.html">Contact</a></li>
+                                <li><a th:href="@{/ecobook/}">Home</a></li>
+<!--                                <li><a href="/shop.html">Shop</a></li>-->
+                                <li><a th:href="@{/ecobook/checkout/}">Checkout</a></li>
+<!--                                <li><a href="/blog.html">Blog</a></li>-->
+<!--                                <li><a href="/single-blog.html">Single Blog</a></li>-->
+<!--                                <li><a href="/regular-page.html">Regular Page</a></li>-->
+<!--                                <li><a href="/contact.html">Contact</a></li>-->
                             </ul>
                         </li>
                         <li><a href="/blog.html">Blog</a></li>
                         <li><a href="/contact.html">Contact</a></li>
-                        <li><h3>Hello, </h3> <span th:text="${user != null ? user.username : ''}"></span></li>
-                        <li><p id="login-logout-link"></p></li>
-                        <script>
-                            // Replace this with your own server-side code to determine if the user is logged in
-                            var user = user;
-
-                            var loginLogoutLink = document.getElementById("login-logout-link");
-                            if (user != null) {
-                                loginLogoutLink.innerHTML = '<a href="../user/logout">Logout</a>';
-                            } else {
-                                loginLogoutLink.innerHTML = '<a href="../user/sign-in">Login</a>';
-                            }
-                        </script>
+                        <li> <a th:if="${session.user} != null" href="/user/sign-out">Logout</a>
+                            <a th:if="${session.user} == null" href="/user/sign-in">Login</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -86,8 +75,10 @@
         <div class="header-meta d-flex clearfix justify-content-end">
             <!-- Search Area -->
             <div class="search-area">
-                <form action="#" method="post">
+                <form action="/shop/" method="get">
                     <input type="search" name="search" id="headerSearch" placeholder="Type for search">
+                    <input type="hidden" name="from" id="from" value="1">
+                    <input type="hidden" name="to" id="to" value="100">
                     <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
             </div>
@@ -97,11 +88,14 @@
             </div>
             <!-- User Login Info -->
             <div class="user-login-info">
-                <a href="#"><img src="/img/core-img/user.svg" alt=""></a>
+                <a th:href="${session.user != null} ? '/user/user-profile' : '/user/sign-in'">
+                    <img src="/img/core-img/user.svg" alt="">
+                </a>
             </div>
             <!-- Cart Area -->
             <div class="cart-area">
-                <a href="/#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span>3</span></a>
+                <a th:if="${session.user} != null" href="#cart-detail" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span th:text="${session.cic}"></span></a>
+                <a th:if="${session.user} == null" th:href="@{/user/sign-in}" ><img src="/img/core-img/bag.svg" alt=""> <span th:text="${session.cic}"></span></a>
             </div>
         </div>
 
