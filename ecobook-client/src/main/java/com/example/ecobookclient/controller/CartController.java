@@ -2,6 +2,7 @@ package com.example.ecobookclient.controller;
 
 import com.example.ecobookclient.request.CartItemRequest;
 import com.example.ecobookclient.request.LoginRequest;
+import com.example.ecobookclient.response.CartItemResponse;
 import com.example.ecobookclient.response.CartResponse;
 import com.example.ecobookclient.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,8 @@ public class CartController {
             log.info(response.getBody());
             String urlGetCart = "http://localhost:8086/api/cart/active-cart";
             HttpEntity<CartItemRequest> entity1 = new HttpEntity<>(new CartItemRequest(), headers);
-            ResponseEntity<CartResponse> response1 = restTemplate.exchange(urlGetCart, HttpMethod.GET, entity1, CartResponse.class);
+            ResponseEntity<CartResponse> response1 = restTemplate.exchange(urlGetCart, HttpMethod.GET, entity1,
+                    CartResponse.class);
             CartResponse cart = response1.getBody();
             session.setAttribute("cart",cart);
             session.setAttribute("cic",cart.getItems().stream().count());
@@ -68,10 +70,16 @@ public class CartController {
             log.info(response.getBody());
             String urlGetCart = "http://localhost:8086/api/cart/active-cart";
 
-            ResponseEntity<CartResponse> response1 = restTemplate.exchange(urlGetCart, HttpMethod.GET, entity1, CartResponse.class);
+            ResponseEntity<CartResponse> response1 = restTemplate.exchange(urlGetCart, HttpMethod.GET, entity1,
+                    CartResponse.class);
             CartResponse cart = response1.getBody();
             session.setAttribute("cart",cart);
             session.setAttribute("cic",cart.getItems().stream().count());
+            session.setAttribute("subtotal",String.format("%.2f",
+                    cart.getItems()
+                            .stream()
+                            .mapToDouble(CartItemResponse::getPrice)
+                            .sum()));
             return "redirect:/shop/0";
 
         }

@@ -49,7 +49,6 @@
                             <!-- Cart Item Desc -->
                             <div class="cart-item-desc">
                                 <span class="product-remove" th:data-item-id="${i.id}"><i class="fa fa-close" aria-hidden="true"></i></span>
-                                <!--                                <a href="/cart/{itemId}(itemId=${i.id})"></a>-->
                                 <h6>Author: <span class="price" th:text="${i.book.author}"></span></h6>
                                 <h6>Name: <span th:text="${i.book.name}"></span></h6>
                                 <p  class="color">Quantity: 1</p>
@@ -125,6 +124,8 @@
                         <option value="value">Da ban: <span th:text="${book.numberSales}"></span></option>
                     </select>
                 </div>
+                <input type="hidden" name="bookId" id="bookId" th:value="${book.id}">
+                <input type="hidden" name="bookPrice" id="bookPrice" th:value="${book.price}">
                 <!-- Cart & Favourite Box -->
                 <div class="cart-fav-box d-flex align-items-center">
                     <!-- Cart -->
@@ -143,91 +144,42 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-8">
-                        <form>
+                        <form action="/comment" method="post">
                             <h3 class="pull-left">New Comment</h3>
                             <button type="submit" class="btn btn-normal pull-right">Submit</button>
+                            <input type="hidden" id="bid" name="bid" th:value="${book.id}">
                             <fieldset>
                                 <div class="row">
                                     <div class="col-sm-3 col-lg-2 hidden-xs">
                                         <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                        <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                                        <textarea class="form-control" id="message" name="message" placeholder="Your message" required=""></textarea>
                                     </div>
                                 </div>
                             </fieldset>
                         </form>
 
-                        <h3>4 Comments</h3>
+                        <h3><span th:text="${cn}"></span>Comments</h3>
 
-                        <!-- COMMENT 1 - START -->
-                        <div class="media">
+                        <!-- COMMENT - START -->
+                        <div th:each="c : ${comments}" class="media">
                             <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
                             <div class="media-body">
-                                <h4 class="media-heading">John Doe</h4>
-                                <p>Vãi lol sách đọc như shit</p>
+                                <h4 class="media-heading" th:text="${c.createdBy}"></h4>
+                                <p th:text="${c.context}"></p>
                                 <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                                    <li><i class="fa fa-thumbs-up"></i>13</li>
+                                    <li ><i class="fa fa-calendar" th:text="${c.createdAt}"></i></li>
+                                    <li ><i class="fa fa-thumbs-up"></i>14</li>
                                 </ul>
                                 <ul class="list-unstyled list-inline media-detail pull-right">
-                                    <li class=""><a href="">Like</a></li>
+                                    <li class="" th:if="${session.user} != null">
+                                        <a th:if="${session.user.accountId} == ${c.userId}" th:href="@{/comment(bid=${c.productId}, id=${c.id})}">Delete</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <!-- COMMENT 1 - END -->
-
-                        <!-- COMMENT 2 - START -->
-                        <div class="media">
-                            <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading">John Doe</h4>
-                                <p>Mẹ shop làm ăn như cc</p>
-                                <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                                    <li><i class="fa fa-thumbs-up"></i>13</li>
-                                </ul>
-                                <ul class="list-unstyled list-inline media-detail pull-right">
-                                    <li class=""><a href="">Like</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- COMMENT 2 - END -->
-
-                        <!-- COMMENT 3 - START -->
-                        <div class="media">
-                            <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading">John Doe</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                                    <li><i class="fa fa-thumbs-up"></i>13</li>
-                                </ul>
-                                <ul class="list-unstyled list-inline media-detail pull-right">
-                                    <li class=""><a href="">Like</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- COMMENT 3 - END -->
-
-                        <!-- COMMENT 4 - START -->
-                        <div class="media">
-                            <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading">John Doe</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                                    <li><i class="fa fa-thumbs-up"></i>13</li>
-                                </ul>
-                                <ul class="list-unstyled list-inline media-detail pull-right">
-                                    <li class=""><a href="">Like</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- COMMENT 4 - END -->
-
+                        <!-- COMMENT - END -->
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ package com.example.ecobookclient.controller;
 import com.example.ecobookclient.request.LoginRequest;
 import com.example.ecobookclient.response.BookResponse;
 import com.example.ecobookclient.response.CategoryResponse;
+import com.example.ecobookclient.response.CommentResponse;
 import com.example.ecobookclient.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -106,8 +107,15 @@ public class BookController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String url = "http://localhost:8082/api/ebook/"+bookId;
-        ResponseEntity<BookResponse> response = restTemplate.exchange(url,HttpMethod.GET,null, BookResponse.class);
+        ResponseEntity<BookResponse> response = restTemplate.exchange(url,HttpMethod.GET,null,
+                BookResponse.class);
         model.addAttribute("book", response.getBody());
+        String urlCom = "http://localhost:8083/api/book-review/"+bookId;
+        ResponseEntity<List<CommentResponse>> response1 = restTemplate.exchange(urlCom,HttpMethod.GET,null,
+                new ParameterizedTypeReference<List<CommentResponse>>() {});
+
+        model.addAttribute("comments",response1.getBody());
+        model.addAttribute("cn",response1.getBody().stream().count());
 
         return "single-product-details";
     }
