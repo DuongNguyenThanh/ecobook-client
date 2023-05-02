@@ -47,55 +47,9 @@
         <br>
         <br>
         <br>
-
-        <div class="detail">
-          <div class="box">
-            <h5>Tìm kiếm đầu sách</h5>
-
-            <form action="" class="data-input">
-              <input
-                type="text"
-                name="s"
-                placeholder="Nhập tên sách"
-              />
-              <button class="btn btn-success">Search</button>
-            </form>
-
-            <h5>Kết quả tìm kiếm</h5>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Tên sách</th>
-                  <th scope="col">Tác giả</th>
-                  <th scope="col">Năm suất bản</th>
-                  <th scope="col">Giá</th>
-                  <th scope="col">Số lượng</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="book : ${books}">
-                  <td scope="col" th:text="${book.name}">Tên sách</td>
-                  <td scope="col" th:text="${book.author}">Tác giả</td>
-                  <td scope="col" th:text="${book.publishing_year}">Năm suất bản</td>
-                  <td scope="col" th:text="${question.price}">Giá</td>
-                  <td scope="col" th:text="${book.quantity}"></td>
-                  <td scope="col">
-                    <a th:href="@{/questions/{id}(id=${question.id})}">View</a>
-                    <p
-                      style="color: rgb(248, 95, 95); cursor: pointer"
-                      th:onclick="|deleteQuestion('${question.id}')|"
-                    >
-                      Delete
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
           <div class="detail">
             <div class="box">
-              <h5>Thêm đầu sách</h5>
+              <h5>Chỉnh sửa thông tin sách</h5>
               <form action="">
                 <div class="mb-3 mt-3">
                   <label class="form-label">Tên sách</label>
@@ -117,7 +71,7 @@
                   <label class="form-label">Số lượng</label>
                   <input class="form-control" placeholder="nhập số lượng" required>
                 </div>
-                <button class="btn btn-success">Thêm</button>
+                <button class="btn btn-success">Lưu</button>
               </form>
             </div>
           </div>

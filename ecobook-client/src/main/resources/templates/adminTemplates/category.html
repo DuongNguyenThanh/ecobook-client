@@ -53,7 +53,7 @@
                 <h2>Quản lí danh mục sách</h2>
 
                 <!-- <h6 th:text="'Tổng số danh mục câu hỏi : ' + ${totalCategory}"> -->
-                  Tổng số danh mục câu hỏi : 5
+                  Tổng số danh mục sách : 5
                 </h6>
               </div>
             </div>
@@ -62,22 +62,19 @@
 
         <div class="detail">
           <div class="box">
-            <h5>Danh sách các danh mục / lĩnh vực câu hỏi</h5>
+            <h5>Danh sách các danh mục</h5>
 
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Số câu hỏi</th>
-                  <th scope="col">Tổng số view</th>
-                  <th scope="col">Chức năng</th>
+                  <th scope="col">Tên danh mục</th>
+                  <th scope="col">Mô tả</th>
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="category : ${listCategory}">
                   <td th:text="${category.name}">Công nghệ</td>
-                  <td th:text="${category.total_question}">32</td>
-                  <td th:text="${category.total_view}">6100</td>
+                  <td th:text="${category.des}">32</td>
                   <td>
                     <a
                       th:href="@{/admin/category/delete/{id}(id=${category.id})}"
@@ -92,25 +89,44 @@
           </div>
 
           <!-- <div class="box">
-            <h5>Thêm danh mục / lĩnh vực câu hỏi</h5>
+            <h5>Thêm danh mục</h5>
             <form
               action="/admin/category/add"
               method="post"
-              class="data-input"
-              th:object="${category}"
             >
               <input
                 type="text"
-                th:field="*{name}"
                 placeholder="Enter name"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Enter description"
                 required
               />
               <button class="btn btn-success">Thêm</button>
             </form>
-          </div> -->
+          </div>
+        </div> -->
+      
+        <div class="detail">
+          <div class="box">
+            <h5>Thêm danh mục</h5>
+            <form action="">
+              <div class="mb-3 mt-3">
+                <label class="form-label">Tên danh mục</label>
+                <input class="form-control" placeholder="nhập tên danh mục" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <input class="form-control" placeholder="nhập mô tả" required>
+              </div>
+              <button class="btn btn-success">Thêm</button>
+            </form>
+          </div>
         </div>
+
       </div>
     </div>
-
   </body>
 </html>

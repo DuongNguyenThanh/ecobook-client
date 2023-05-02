@@ -3,7 +3,6 @@ package com.example.ecobookclient.controller.AdminController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -19,4 +18,8 @@ public class AdminController {
         return "adminTemplates/category";
     }
     
+    @GetMapping(value="/book_edit")
+    public String getMethodName2() {
+        return "adminTemplates/book_edit";
+    }
 }
