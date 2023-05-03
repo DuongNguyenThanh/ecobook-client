@@ -51,8 +51,7 @@
             <div class="box">
               <div class="data">
                 <h2>Quản lí danh mục sách</h2>
-
-                <!-- <h6 th:text="'Tổng số danh mục câu hỏi : ' + ${totalCategory}"> -->
+                <h6 th:text="'Tổng số danh mục : ' + ${totalCategory}">
                   Tổng số danh mục sách : 5
                 </h6>
               </div>
@@ -74,7 +73,7 @@
               <tbody>
                 <tr th:each="category : ${listCategory}">
                   <td th:text="${category.name}">Công nghệ</td>
-                  <td th:text="${category.des}">32</td>
+                  <td th:text="${category.description}">32</td>
                   <td>
                     <a
                       th:href="@{/admin/category/delete/{id}(id=${category.id})}"
@@ -91,16 +90,16 @@
         <div class="detail">
           <div class="box">
             <h5>Thêm danh mục</h5>
-            <form action="">
+            <form action="/admin/category/add" method="post">
               <div class="mb-3 mt-3">
                 <label class="form-label">Tên danh mục</label>
-                <input class="form-control" placeholder="nhập tên danh mục" required>
+                <input class="form-control" name="cateName" placeholder="nhập tên danh mục" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Mô tả</label>
-                <input class="form-control" placeholder="nhập mô tả" required>
+                <input class="form-control" name="cateDes" placeholder="nhập mô tả" required>
               </div>
-              <button class="btn btn-success">Thêm</button>
+              <button type="submit" class="btn btn-success">Thêm</button>
             </form>
           </div>
         </div>

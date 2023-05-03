@@ -81,8 +81,8 @@
                   <td scope="col" th:text="${book.price}">Giá</td>
                   <td scope="col" th:text="${book.quantity}"></td>
                   <td scope="col">
-                    <a th:href="@{/books/{id}(id=${book.id})}">View</a>
-                    <p th:if="${book.quantity > 0}" style="color: rgb(248, 95, 95); cursor: pointer"
+                    <a th:href="@{/admin/book_edit/{id}(id=${book.id})}">Edit</a>
+                    <p style="color: rgb(248, 95, 95); cursor: pointer"
                       th:onclick="|deleteBook('${book.id}')|">Delete</p>
                   </td>
                 </tr>
