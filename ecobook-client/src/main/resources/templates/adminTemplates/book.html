@@ -52,10 +52,11 @@
           <div class="box">
             <h5>Tìm kiếm đầu sách</h5>
 
-            <form action="" class="data-input">
+            <form action="/admin/findBook" class="data-input" method="GET">
               <input
                 type="text"
-                name="s"
+                name="book"
+                id="book"
                 placeholder="Nhập tên sách"
               />
               <button class="btn btn-success">Search</button>
@@ -76,17 +77,13 @@
                 <tr th:each="book : ${books}">
                   <td scope="col" th:text="${book.name}">Tên sách</td>
                   <td scope="col" th:text="${book.author}">Tác giả</td>
-                  <td scope="col" th:text="${book.publishing_year}">Năm suất bản</td>
-                  <td scope="col" th:text="${question.price}">Giá</td>
+                  <td scope="col" th:text="${book.publishYear}">Năm xuất bản</td>
+                  <td scope="col" th:text="${book.price}">Giá</td>
                   <td scope="col" th:text="${book.quantity}"></td>
                   <td scope="col">
-                    <a th:href="@{/questions/{id}(id=${question.id})}">View</a>
-                    <p
-                      style="color: rgb(248, 95, 95); cursor: pointer"
-                      th:onclick="|deleteQuestion('${question.id}')|"
-                    >
-                      Delete
-                    </p>
+                    <a th:href="@{/books/{id}(id=${book.id})}">View</a>
+                    <p th:if="${book.quantity > 0}" style="color: rgb(248, 95, 95); cursor: pointer"
+                      th:onclick="|deleteBook('${book.id}')|">Delete</p>
                   </td>
                 </tr>
               </tbody>
