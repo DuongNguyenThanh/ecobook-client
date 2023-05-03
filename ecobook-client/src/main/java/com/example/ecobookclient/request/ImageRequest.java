@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryRequest {
+public class ImageRequest {
     private String name;
-    private String description;
+    private String img;
 }

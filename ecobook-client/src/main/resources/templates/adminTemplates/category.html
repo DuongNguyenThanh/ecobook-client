@@ -90,14 +90,14 @@
         <div class="detail">
           <div class="box">
             <h5>Thêm danh mục</h5>
-            <form action="/admin/category/add" method="post">
+            <form action="/admin/category/add" method="post" th:object="${initCategory}">
               <div class="mb-3 mt-3">
                 <label class="form-label">Tên danh mục</label>
-                <input class="form-control" name="cateName" placeholder="nhập tên danh mục" required>
+                <input class="form-control" th:field="${initCategory.name}" placeholder="nhập tên danh mục" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Mô tả</label>
-                <input class="form-control" name="cateDes" placeholder="nhập mô tả" required>
+                <input class="form-control"  th:field="${initCategory.description}" placeholder="nhập mô tả" required>
               </div>
               <button type="submit" class="btn btn-success">Thêm</button>
             </form>
