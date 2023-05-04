@@ -1,6 +1,8 @@
 package com.example.ecobookclient.controller;
 
+import com.example.ecobookclient.request.CartItemRequest;
 import com.example.ecobookclient.request.PaymentRequest;
+import com.example.ecobookclient.response.CartResponse;
 import com.example.ecobookclient.response.PaymentInfoResponse;
 import com.example.ecobookclient.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 @Slf4j
 @Controller
@@ -29,6 +30,12 @@ public class PaymentController {
                       @RequestParam(name = "order-id") Integer id){
         UserResponse user = (UserResponse) session.getAttribute("user");
         if (user != null) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("D:/image/cart.txt",false))) {
+                CartResponse cart = (CartResponse) session.getAttribute("cart");
+                writer.write(cart.getId()+"");
+            } catch (IOException e) {
+                // handle exception
+            }
             String url = "http://localhost:8084/api/payment";
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + user.getAccessToken());
@@ -65,16 +72,14 @@ public class PaymentController {
                              @RequestParam("PayerID") String payerId,
                              @RequestParam("userId") Long userId,
                              @RequestParam("orderId") Integer orderId,
-                             Model model) {
-//        UserResponse user = (UserResponse) session.getAttribute("user");
+                             RedirectAttributes redirectAttributes) {
+//      get access token
         String filePath = "D:/image/access.txt";
         StringBuilder content = new StringBuilder();
-        String t="";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line);
-                t+=line;
             }
 
         } catch (IOException e) {
@@ -85,12 +90,30 @@ public class PaymentController {
                 "&userId="+userId+"&orderId="+orderId;
         HttpHeaders headers = new HttpHeaders();
 
-        headers.set("Authorization", "Bearer " + t);
+        headers.set("Authorization", "Bearer " + fileContent);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<PaymentRequest> entity = new HttpEntity<>(new PaymentRequest(), headers);
         ResponseEntity<PaymentInfoResponse> response = restTemplate.exchange(url,HttpMethod.GET,entity,PaymentInfoResponse.class);
-        model.addAttribute("payment", response.getBody());
+        redirectAttributes.addFlashAttribute("payment", response.getBody());
+        //get cart id
+        StringBuilder content1 = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("D:/image/cart.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content1.append(line);
+            }
 
-        return "success";
+        } catch (IOException e) {
+            // handle exception
+        }
+        String fileContent1 = content1.toString();
+        //update status cart
+        String urlUpdate = "http://localhost:8086/api/cart/update-status/"+fileContent1;
+        log.info(fileContent1);
+        ResponseEntity<String> response1 = restTemplate.exchange(urlUpdate,HttpMethod.POST,entity,String.class);
+        if(response1.getBody().equalsIgnoreCase("Update Status Cart success!")){
+            return "redirect:/checkout/status";
+        }
+        return "redirect:/user/sign-out";
     }
 }

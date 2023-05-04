@@ -32,7 +32,7 @@
 
   <!-- Cart Button -->
   <div class="cart-button">
-    <a  id="rightSideCart"><img src="/img/core-img/bag.svg" alt=""> <span th:text="${session.cic}"></span></a>
+    <a  id="rightSideCart"><img src="/img/core-img/bag.svg" alt=""></a>
   </div>
 
   <div class="cart-content d-flex">
@@ -109,8 +109,7 @@
 
   <!-- Single Product Description -->
   <div th:if="${payment} != null" class="single_product_desc clearfix">
-    <h2 th:text="${session.user.firstName}"></h2>
-    <h2>Have a good day</h2>
+    <h2>Payment success</h2>
     <h3>Date: <span th:text="${payment.paymentDate}"></span></h3>
     <h3>Amount: <span th:text="${payment.amount}"></span></h3>
     <h3>PaymentType: <span th:text="${payment.paymentType}"></span></h3>

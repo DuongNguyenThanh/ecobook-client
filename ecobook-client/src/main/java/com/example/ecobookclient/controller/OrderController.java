@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -58,5 +59,15 @@ public class OrderController {
         }
 
         return "redirect:/user/sign-in";
+    }
+    @GetMapping("/status")
+    public String getStatus(HttpSession session){
+        session.removeAttribute("cart");
+        session.removeAttribute("cic");
+        session.removeAttribute("subtotal");
+        session.setAttribute("cart", new CartResponse());
+        session.setAttribute("cic", 0);
+        session.setAttribute("subtotal",String.format("%.2f",new Double(0)));
+        return "success";
     }
 }
