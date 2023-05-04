@@ -17,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -62,6 +65,12 @@ public class UserController {
             session.setAttribute("user", Objects.requireNonNull(us.getBody()));
 //            log.info("login success: " + us.getBody());
             redirectAttributes.addFlashAttribute("user", us.getBody());
+            String filePath = "D:/image/access.txt";
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath,false))) {
+                writer.write(us.getBody().getAccessToken());
+            } catch (IOException e) {
+                // handle exception
+            }
             //get cart info when log in success
             String urlCart = "http://localhost:8086/api/cart/active-cart";
             headers.set("Authorization","Bearer " + us.getBody().getAccessToken());
@@ -75,7 +84,7 @@ public class UserController {
             session.setAttribute("subtotal",String.format("%.2f",
                     cart.getItems()
                     .stream()
-                    .mapToDouble(CartItemResponse::getPrice)
+                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
                     .sum()));
             return "redirect:/ecobook/";
 

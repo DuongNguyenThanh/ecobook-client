@@ -33,8 +33,7 @@ public class CommentController {
                     .context(context)
                     .productId(bid)
                     .createdBy(user.getFirstName())
-                    .build(),
-                    headers);
+                    .build(), headers);
             ResponseEntity<CommentResponse> response = restTemplate.exchange(urlCom, HttpMethod.POST,
                     entity,CommentResponse.class);
 //            model.addAttribute("me",response.getBody());
