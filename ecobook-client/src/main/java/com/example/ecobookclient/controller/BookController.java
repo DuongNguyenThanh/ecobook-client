@@ -5,6 +5,7 @@ import com.example.ecobookclient.response.BookResponse;
 import com.example.ecobookclient.response.CategoryResponse;
 import com.example.ecobookclient.response.CommentResponse;
 import com.example.ecobookclient.response.UserResponse;
+import com.example.ecobookclient.util.GeneralPageResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.core.ParameterizedTypeReference;
@@ -37,23 +38,23 @@ public class BookController {
 
             if(cateId == 0){
                 // get all
-                ResponseEntity<List<BookResponse>> response = restTemplate.exchange(url,HttpMethod.GET,null,
-                        new ParameterizedTypeReference<List<BookResponse>>() {});
-                List<BookResponse> list = response.getBody();
-                model.addAttribute("book", response.getBody());
-                model.addAttribute("count",list.stream().count());
+                ResponseEntity<GeneralPageResponse<BookResponse>> response = restTemplate.exchange(url,HttpMethod.GET,null,
+                        new ParameterizedTypeReference<GeneralPageResponse<BookResponse>>() {});
+                GeneralPageResponse<BookResponse> list = response.getBody();
+                model.addAttribute("book", Objects.requireNonNull(response.getBody()).getContent());
+                model.addAttribute("count", (long) Objects.requireNonNull(list).getContent().size());
             }else{
                 // get book by category id
                 String urlBookByCate = "http://localhost:8082/api/ebook/book-cate?cate-id="+cateId;
-                ResponseEntity<List<BookResponse>> response = restTemplate.exchange(urlBookByCate,HttpMethod.GET,null,
-                        new ParameterizedTypeReference<List<BookResponse>>() {});
-                List<BookResponse> list = response.getBody();
+                ResponseEntity<GeneralPageResponse<BookResponse>> response = restTemplate.exchange(urlBookByCate,HttpMethod.GET,null,
+                        new ParameterizedTypeReference<GeneralPageResponse<BookResponse>>() {});
+                GeneralPageResponse<BookResponse> list = response.getBody();
                 if(list == null){
                     model.addAttribute("count",0);
                 }
                 else{
-                    model.addAttribute("book", list);
-                    model.addAttribute("count",list.stream().count());
+                    model.addAttribute("book", list.getContent());
+                    model.addAttribute("count", (long) list.getContent().size());
                 }
 
             }
@@ -83,15 +84,15 @@ public class BookController {
                     new ParameterizedTypeReference<List<BookResponse>>() {});
             List<BookResponse> list = response.getBody();
             model.addAttribute("book", response.getBody());
-            model.addAttribute("count",list.stream().count());
+            model.addAttribute("count", (long) Objects.requireNonNull(list).size());
         }
         else {
             String url1 = "http://localhost:8082/api/ebook/all-book";
-            ResponseEntity<List<BookResponse>> response = restTemplate.exchange(url1,HttpMethod.GET,null,
-                    new ParameterizedTypeReference<List<BookResponse>>() {});
-            List<BookResponse> list = response.getBody();
-            model.addAttribute("book", response.getBody());
-            model.addAttribute("count",list.stream().count());
+            ResponseEntity<GeneralPageResponse<BookResponse>> response = restTemplate.exchange(url1,HttpMethod.GET,null,
+                    new ParameterizedTypeReference<GeneralPageResponse<BookResponse>>() {});
+            GeneralPageResponse<BookResponse> list = response.getBody();
+            model.addAttribute("book", Objects.requireNonNull(response.getBody()).getContent());
+            model.addAttribute("count", (long) Objects.requireNonNull(list).getContent().size());
         }
         String categoryUrl = "http://localhost:8082/api/category/";
         ResponseEntity<List<CategoryResponse>> responseCate = restTemplate.exchange(categoryUrl,HttpMethod.GET,null,
