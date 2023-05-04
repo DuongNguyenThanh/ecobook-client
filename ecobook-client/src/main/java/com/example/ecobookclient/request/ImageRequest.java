@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ImageRequest {
-    private String name;
-    private String img;
+    private Integer id;
 }

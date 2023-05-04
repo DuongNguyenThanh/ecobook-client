@@ -41,7 +41,7 @@
 
           <div class="box">
             <a class="btn btn-info" href="/">Quay về</a>
-            <a class="btn btn-warning" href="/logout">Log out</a>
+            <a class="btn btn-warning" href="/user/sign-in">Log out</a>
           </div>
         </div>
         <br>
@@ -50,26 +50,26 @@
           <div class="detail">
             <div class="box">
               <h5>Chỉnh sửa thông tin sách</h5>
-              <form action="/admin/book_update" method="post" th:object="${initBook}">
+              <form action="/admin/book_update" method="post" th:object="${book}">
                 <div class="mb-3 mt-3">
                   <label class="form-label">Tên sách</label>
-                  <input class="form-control" th:field="${initBook.name}" placeholder="nhập tên sách" required>
+                  <input class="form-control" th:field="${book.name}" placeholder="nhập tên sách" required>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Tác giả</label>
-                  <input class="form-control" th:field="${initBook.author}" placeholder="nhập tác giả" required>
+                  <input class="form-control" th:field="${book.author}" placeholder="nhập tác giả" required>
                 </div>
                 <div class="mb-3 mt-3">
                   <label class="form-label">Năm xuất bản</label>
-                  <input class="form-control" th:field="${initBook.publishYear}" placeholder="nhập năm xuất bản">
+                  <input class="form-control" th:field="${book.publishYear}" placeholder="nhập năm xuất bản">
                 </div>
                 <div class="mb-3 mt-3">
                   <label class="form-label">Giá</label>
-                  <input class="form-control" th:field="${initBook.price}" placeholder="nhập giá" required>
+                  <input class="form-control" th:field="${book.price}" placeholder="nhập giá" required>
                 </div>
                 <div class="mb-3 mt-3">
                   <label class="form-label">Số lượng</label>
-                  <input class="form-control" th:field="${initBook.quantity}" placeholder="nhập số lượng" required>
+                  <input class="form-control" th:field="${book.quantity}" placeholder="nhập số lượng" required>
                 </div>
                 <button class="btn btn-success" type="submit">Lưu</button>
               </form>

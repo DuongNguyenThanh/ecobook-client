@@ -16,12 +16,11 @@ public class BookRequest {
     private String name;
     private String author;
     private String publisher;
-    @JsonProperty("publish_year")
-    private String publishYear;
+    private String publish_year;
     private Float price;
-    @JsonProperty("number_sales")
-    private Integer numberSales;
+    private Integer number_sales;
     private String description;
     private Integer quantity;
+    private Integer category_id;
     private List<ImageRequest> images;
 }

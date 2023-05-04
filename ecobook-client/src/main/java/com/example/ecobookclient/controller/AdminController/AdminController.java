@@ -1,9 +1,11 @@
 package com.example.ecobookclient.controller.AdminController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.ecobookclient.request.BookRequest;
 import com.example.ecobookclient.request.CategoryRequest;
+import com.example.ecobookclient.request.ImageRequest;
 import com.example.ecobookclient.response.BookResponse;
 import com.example.ecobookclient.response.CategoryResponse;
 
@@ -30,8 +32,23 @@ public class AdminController {
 
     @GetMapping("/book")
     public String homeAdmin(Model model) {
+        String categoryUrl = "http://localhost:8082/api/category/";
+        ResponseEntity<List<CategoryResponse>> responseCate = restTemplate.exchange(categoryUrl,HttpMethod.GET,null,
+                new ParameterizedTypeReference<List<CategoryResponse>>() {});
+        List<CategoryResponse> listCategory = responseCate.getBody();
+        model.addAttribute("categories",listCategory);
         model.addAttribute("initBook", new BookRequest());
+
         return "adminTemplates/book";
+    }
+
+    @GetMapping("/book_delete/{id}")
+    public String deleteBook(@PathVariable("id") Integer id) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8082/api/ebook/"+id;
+        restTemplate.delete(url);
+
+        return "redirect:/admin/book";
     }
 
     @GetMapping("/findBook")
@@ -46,6 +63,12 @@ public class AdminController {
                 new ParameterizedTypeReference<List<BookResponse>>() {});
         List<BookResponse> list = response.getBody();
         model.addAttribute("books", list);
+        
+        String categoryUrl = "http://localhost:8082/api/category/";
+        ResponseEntity<List<CategoryResponse>> responseCate = restTemplate.exchange(categoryUrl,HttpMethod.GET,null,
+                new ParameterizedTypeReference<List<CategoryResponse>>() {});
+        List<CategoryResponse> listCategory = responseCate.getBody();
+        model.addAttribute("categories",listCategory);
         model.addAttribute("initBook", new BookRequest());
 
         return "adminTemplates/book";
@@ -81,6 +104,15 @@ public class AdminController {
 
         return "redirect:/admin/category";
     }
+
+    @GetMapping("/category/delete/{id}")
+    public String deleteCategory(@PathVariable("id") Integer id) {
+        // RestTemplate restTemplate = new RestTemplate();
+        // String url = "http://localhost:8082/api/ebook/"+id;
+        // restTemplate.delete(url);
+
+        return "redirect:/admin/category";
+    }
     
     @GetMapping(value="/book_edit/{id}")
     public String getMethodName2(@PathVariable("id") Integer id, Model model) {
@@ -94,23 +126,36 @@ public class AdminController {
         return "adminTemplates/book_edit";
     }
 
+    @PostMapping("/book_update")
+    public String updateBook() {
+        return "redirect:/admin/book";
+    }
+
     @PostMapping(value = "/addBook")
-    public String addBook(Model model, BookRequest initBook) {
+    public String addBook(Model model, BookRequest initBook, @RequestParam("category_id") String categoryId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String urlCom = "http://localhost:8082/api/book/";
+        String urlCom = "http://localhost:8082/api/ebook/";
+
+        List<ImageRequest> tempImageList = new ArrayList<>();
+        tempImageList.add(new ImageRequest(1));
+        int category_id = Integer.parseInt(categoryId.replace(",", ""));
+        
         HttpEntity<BookRequest> entity = new HttpEntity<>(BookRequest
                 .builder()
                 .name(initBook.getName())
                 .author(initBook.getAuthor())
-                .publishYear(initBook.getPublishYear())
+                .publish_year(initBook.getPublish_year())
                 .price(initBook.getPrice())
                 .quantity(initBook.getQuantity())
+                .category_id(category_id)
+                .images(tempImageList)
                 .build(),
                 headers);
         ResponseEntity<BookRequest> response = restTemplate.exchange(urlCom, HttpMethod.POST,
                 entity,BookRequest.class);
-
+        System.out.println(category_id + " her is category_id");
         return "redirect:/admin/book";
     }
+
 }
