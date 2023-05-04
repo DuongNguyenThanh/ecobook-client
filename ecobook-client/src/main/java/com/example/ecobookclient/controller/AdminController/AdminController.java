@@ -119,9 +119,15 @@ public class AdminController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String url = "http://localhost:8082/api/ebook/"+id;
-        ResponseEntity<BookResponse> response = restTemplate.exchange(url,HttpMethod.GET,null,
-                BookResponse.class);
+        ResponseEntity<BookRequest> response = restTemplate.exchange(url,HttpMethod.GET,null,
+                BookRequest.class);
         model.addAttribute("book", response.getBody());
+
+        String categoryUrl = "http://localhost:8082/api/category/";
+        ResponseEntity<List<CategoryResponse>> responseCate = restTemplate.exchange(categoryUrl,HttpMethod.GET,null,
+                new ParameterizedTypeReference<List<CategoryResponse>>() {});
+        List<CategoryResponse> listCategory = responseCate.getBody();
+        model.addAttribute("categories",listCategory);
 
         return "adminTemplates/book_edit";
     }
