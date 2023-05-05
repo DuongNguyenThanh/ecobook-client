@@ -50,7 +50,7 @@
                                 <!--                                <a href="/cart/{itemId}(itemId=${i.id})"></a>-->
                                 <h6>Author: <span class="price" th:text="${i.book.author}"></span></h6>
                                 <h6>Name: <span th:text="${i.book.name}"></span></h6>
-                                <p  class="color">Quantity: 1</p>
+                                <h6  class="color">Quantity: <span th:text="${i.quantity}"></span></h6>
                                 <h6>Price: <span th:text="${i.book.price}"class="price"></span></h6>
                             </div>
                         </a>
@@ -77,8 +77,8 @@
                     <li><span>discount:</span> <span>0%</span></li>
                     <li><span>total:</span> <span th:text="${session.subtotal}"></span></li>
                 </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="/checkout/" class="btn essence-btn">check out</a>
+                <div th:if="${session.cart} != null" class="checkout-btn mt-100">
+                    <a href="/checkout/" class="btn essence-btn">Check out</a>
                 </div>
             </div>
         </div>
