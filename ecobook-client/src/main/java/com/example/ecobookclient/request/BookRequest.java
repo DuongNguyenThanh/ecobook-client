@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BookRequest {
+    private Integer id;
     private String name;
     private String author;
     private String publisher;
