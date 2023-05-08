@@ -5,6 +5,7 @@ import com.example.ecobookclient.response.CartResponse;
 import com.example.ecobookclient.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/user/sign-in/oauth")
 public class OauthController {
     private final RestTemplate restTemplate = new RestTemplate();
@@ -62,12 +63,12 @@ public class OauthController {
             }
 //            ResponseEntity<String> response1 = restTemplate.exchange("http://localhost:8081/api/user/oauth2/success/", HttpMethod.GET, entity1, String.class);
 //
-            return "redirect:/ecobook/";
+            return "redirect:http://localhost:8009/ecobook/";
 
         } catch (Exception ex) {
             log.info(ex.getMessage());
             redirectAttributes.addFlashAttribute("message", "wrong password or username");
-            return "redirect:/user/sign-in";
+            return "redirect:http://localhost:8009/user/sign-in";
         }
     }
 }
